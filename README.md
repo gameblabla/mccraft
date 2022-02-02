@@ -1,5 +1,7 @@
 # MCTest
 
+![](screenshot.png)
+
 This originally came from this forum thread :
 https://www.avrfreaks.net/forum/simple-3d-graphics-atmega-microcontroller
 
