@@ -9,10 +9,10 @@ OBJ_C		= $(notdir $(patsubst %.c, %.o, $(SRC_C)))
 OBJ_S		= $(notdir $(patsubst %.s, %.o, $(SRC_CP)))
 OBJS		= $(OBJ_C) $(OBJ_S)
 
-CFLAGS		= -Ofast -fdata-sections -ffunction-sections -fomit-frame-pointer -flto -DNOMENU
+CFLAGS		= -O0 -g3
 CFLAGS		+= -Isrc
 
-LDFLAGS     = -nodefaultlibs -lc -lgcc -lm -lSDL -lasound -Wl,--as-needed,--gc-sections -flto -s
+LDFLAGS     = -nodefaultlibs -lc -lgcc -lm -lSDL -lasound
 
 # Rules to make executable
 $(PRGNAME): $(OBJS)  

@@ -3,21 +3,24 @@
  *
  * Created: 2/23/2019 4:41:28 PM
  *  Author: lucah
- */ 
-
-#define FLOATING_POINT 1
-
+ */
 #include <SDL/SDL.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdint.h>
 #include <math.h>
-//#include "ff.h"
 #include "textures.h"
+
+#define FLOATING_POINT 1
 
 #ifndef FLOATING_POINT
 #define accum _Accum
 #endif
+
+Uint32 start;
+
+#define FPS_VIDEO 60
+const float real_FPS = 1000/FPS_VIDEO;
 
 //Don't make any of these larger then 120 and make sure that the world can even still fit into RAM
 //world size (in bytes) = WORLD_WIDTH * WORLD_HEIGHT * WORLD_DEPTH
@@ -240,7 +243,13 @@ int main(void){
 	
 	while(1)
 	{
+		start = SDL_GetTicks();
+		
+		#ifdef FLOATING_POINT
 		rotY+= 1.1f;
+		#else
+		rotY+= 1.1K;
+		#endif
 		cosX = cos(toRadians(rotX));
 		cosY = cos(toRadians(rotY));
 		sinX = sin(toRadians(rotX));
@@ -673,6 +682,11 @@ int main(void){
 			}
 		}
 		SDL_Flip(screen);
+		
+		if (real_FPS > SDL_GetTicks()-start)
+		{
+			SDL_Delay(real_FPS-(SDL_GetTicks()-start));
+		}
 	}
 	
 	SDL_FreeSurface(screen);
