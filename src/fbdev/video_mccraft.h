@@ -1,11 +1,11 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include <SDL/SDL.h>
+#include <stdint.h>
 
-#define FRAMEBUFFER_GAME screen->pixels
+#define FRAMEBUFFER_GAME framebuffer_game
 
-extern SDL_Surface* screen;
+extern uint8_t* framebuffer_game;
 
 extern int Init_video();
 extern void Start_video();

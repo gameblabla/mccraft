@@ -9,7 +9,7 @@ OBJ_C		= $(notdir $(patsubst %.c, %.o, $(SRC_C)))
 OBJ_S		= $(notdir $(patsubst %.s, %.o, $(SRC_CP)))
 OBJS		= $(OBJ_C) $(OBJ_S)
 
-CFLAGS		= -O0 -g3 
+CFLAGS		= -O0 -g3 -D_16BIT
 CFLAGS		+= -Isrc -Idata -Isrc/sdl
 
 LDFLAGS     = -nodefaultlibs -lc -lgcc -lm -lSDL -lSDL_image -lasound

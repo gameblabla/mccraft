@@ -459,7 +459,7 @@ void World_loop()
 			intZ = (signed char)z;
 			color_texture = SKY_RGB_COLOR;
 			Rendering_World();
-			bufSetPixel(screen->pixels, i ,j, color_texture);
+			bufSetPixel(FRAMEBUFFER_GAME, i ,j, color_texture);
 		}
 	}	
 }
