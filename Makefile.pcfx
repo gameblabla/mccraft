@@ -1,0 +1,31 @@
+PRGNAME     = mccraft.elf
+CC			= v810-gcc
+LD			= v810-ld
+
+SRCDIR		= ./src ./src/pcfx
+VPATH		= $(SRCDIR)
+SRC_C		= $(foreach dir, $(SRCDIR), $(wildcard $(dir)/*.c))
+SRC_S		= $(foreach dir, $(SRCDIR), $(wildcard $(dir)/*.s))
+OBJ_C		= $(notdir $(patsubst %.c, %.o, $(SRC_C)))
+OBJ_S		= $(notdir $(patsubst %.s, %.o, $(SRC_CP)))
+OBJS		= $(OBJ_C) $(OBJ_S)
+
+CFLAGS		= -Os
+CFLAGS		+= -Isrc -Idata -Isrc/pcfx
+CFLAGS		+= -I$(V810GCC)/include/ -I$(V810GCC)/v810/include/ -Wall -Wextra -std=gnu99 -mv810 -msda=256 -mprolog-function
+
+LDFLAGS     = -L$(V810GCC)/lib/ -L$(V810GCC)/v810/lib/ -L$(V810GCC)/lib/gcc/v810/4.7.4/ $(V810GCC)/v810/lib/crt0.o -lc -lgcc -lm -leris -lsim
+
+# Rules to make executable
+$(PRGNAME): $(OBJS)  
+	$(LD) $^ $(LDFLAGS) -o $(PRGNAME)
+	isolink ncraft.bin -pcfx out.bin 
+
+$(OBJ_C) : %.o : %.c
+	$(CC) $(CFLAGS) -c -o $@ $<
+	
+$(OBJ_S) : %.o : %.s
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+clean:
+	rm -f $(PRGNAME) *.o *.bin 

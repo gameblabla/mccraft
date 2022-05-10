@@ -13,7 +13,7 @@ int Init_video()
 {
 	SDL_Surface* tmp;
 	SDL_Init(SDL_INIT_VIDEO);
-	screen = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, BPP_BITDEPTH, SDL_SWSURFACE);
+	screen = SDL_SetVideoMode(SCREEN_GAME_WIDTH, SCREEN_GAME_HEIGHT, BPP_BITDEPTH, SDL_SWSURFACE);
 	
 	#ifndef _16BIT
 	tmp = SDL_LoadBMP("data/final.bmp");

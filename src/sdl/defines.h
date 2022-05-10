@@ -15,8 +15,8 @@
 #define STEP_RESOLUTION 16.0f
 #endif
 
-#define SCREEN_WIDTH 256
-#define SCREEN_HEIGHT 240
+#define SCREEN_GAME_WIDTH 256
+#define SCREEN_GAME_HEIGHT 240
 
 /*
  * Multiplications on some CPU architectures (V810 for instance)
@@ -30,7 +30,7 @@
 #define VOID_RGB_COLOR RGB565(0x8B, 0xa6, 0xC1)
 #define EMPTY_RGB_COLOR RGB565(128, 128, 128)
 #define TEXTURE_ARRAY mccraft_texture
-#define bufSetPixel(buffer,x,y,color) *((uint16_t*)buffer + x + y * SCREEN_WIDTH) = color;
+#define bufSetPixel(buffer,x,y,color) *((uint16_t*)buffer + x + y * SCREEN_GAME_WIDTH) = color;
 #define BPP_BITDEPTH 16
 static uint16_t color_texture;
 #else
@@ -38,7 +38,7 @@ static uint16_t color_texture;
 #define VOID_RGB_COLOR 0x45
 #define EMPTY_RGB_COLOR 0x29
 #define TEXTURE_ARRAY mccraft_texture_8bit
-#define bufSetPixel(buffer,x,y,color) *((uint8_t*)buffer + x + y * SCREEN_WIDTH) = color;
+#define bufSetPixel(buffer,x,y,color) *((uint8_t*)buffer + x + y * SCREEN_GAME_WIDTH) = color;
 #define BPP_BITDEPTH 8
 static uint8_t color_texture;
 #endif

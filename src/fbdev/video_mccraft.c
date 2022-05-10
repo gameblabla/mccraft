@@ -56,7 +56,7 @@ int Init_video()
 		printf("Error reading fixed information.\n");
 	}
 	
-	screensize = (SCREEN_WIDTH*SCREEN_HEIGHT)*2;
+	screensize = (SCREEN_GAME_WIDTH*SCREEN_GAME_HEIGHT)*2;
 	framebuffer_game = mmap(0, screensize, PROT_READ | PROT_WRITE, MAP_SHARED, fbfd, 0);
 	
     vinfo.xoffset = 0;

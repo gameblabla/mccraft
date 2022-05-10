@@ -1,0 +1,20 @@
+volume {
+  system_id [CD-RTOS CD-BRIDGE]
+  volume_id [NCRAFT]
+  volume_set_id [NCRAFT]
+  publisher_id [GAMEBLABLA]
+  preparer_id [GAMEBLABLA]
+  application_id [CDI_BOMB.APP]
+  copyright_file_id [COPYRGHT.TXT]
+  abstract_file_id [ABSTRACT.TXT]
+  bibliographic_file_id [BIBLIOGR.TXT]
+}
+
+dir {
+  file COPYRGHT.TXT
+  file ABSTRACT.TXT
+  file BIBLIOGR.TXT
+  file CDI_BOMB.APP
+  file PLANE_A.PAL
+  file PLANE_B.PAL
+}

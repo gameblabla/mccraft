@@ -1,0 +1,68 @@
+SHELL=/bin/bash
+
+#Configuration, name, folders
+NAME    = CDI_BOMB.APP
+ELF     = cdi_bomb.elf
+OUTPUT  = out
+BUILD   = build
+SRC     = src
+
+#COMPILER CONFIGURATION
+CC      = m68k-elfos9-gcc
+CCFLAGS = -Wall -Wextra -march=68000 -mcpu=68000 -mpcrel -ma6rel -Os -fno-common
+CCFLAGS += -Isrc -Isrc/cdi -Isrc/cdi/cdi
+AS      = m68k-elfos9-as
+ASFLAGS = -march=68000 -mcpu=68000
+LD      = m68k-elfos9-gcc
+ELF2MOD = elf2mod
+MASTER  = psxbuild
+RM      = rm
+
+SRCDIR		= ./src ./src/cdi ./src/cdi/cdi
+VPATH		= $(SRCDIR)
+SRC_C		= $(foreach dir, $(SRCDIR), $(wildcard $(dir)/*.c))
+SRC_S		= $(foreach dir, $(SRCDIR), $(wildcard $(dir)/*.s))
+OBJ_C		= $(notdir $(patsubst %.c, %.o, $(SRC_C)))
+OBJ_S		= $(notdir $(patsubst %.s, %.o, $(SRC_S)))
+OBJS		= $(OBJ_C) $(OBJ_S)
+
+#LINKER CONFIGURATION
+LDSCRIPT = cdi.lds
+LDPARAM = -Wl,-q -nostdlib -T $(LDSCRIPT)
+
+cd: all
+	$(MASTER) --cuefile build.cat NOBELIA.bin
+
+all: link
+
+rebuild: clean cd
+
+#$(BUILD)/MUSIC.RTF: music/M00_GWLD.ACM music/M01_TRAV.ACM
+#	ruby acm2xa.rb $@ $+
+
+#$(BUILD)/DATA.RTF: $(BUILD)/TILES.BIN $(BUILD)/SFX.BIN
+#	dd if=$(BUILD)/TILES.BIN of=$@ bs=2048 conv=sync
+#	dd if=$(BUILD)/SFX.BIN of=$@ bs=2048 conv=notrunc,sync oflag=append
+
+link: $(OBJS) $(LDSCRIPT) | $(OUTPUT)
+	$(LD) $(CCFLAGS) $(LDPARAM) -o $(OUTPUT)/$(ELF) $(OBJS) -lc -lgcc -lm
+	$(ELF2MOD) $(OUTPUT)/$(ELF) $(BUILD)/$(NAME)
+
+$(OBJ_C) : %.o : %.c
+	$(CC) $(CCFLAGS) -c -o $@ $<
+	
+$(OBJ_S) : %.o : %.s
+	$(AS) $(ASFLAGS) -c -o $@ $<
+
+$(OUTPUT):
+	mkdir -p $(OUTPUT)
+
+clean:
+	-@$(RM) *.o
+	-@$(RM) $(OUTPUT)/$(ELF)
+	-@$(RM) $(BUILD)/$(NAME)
+	-@$(RM) $(BUILD)/DATA.RTF
+	-@$(RM) $(BUILD)/MUSIC.RTF
+	-@$(RM) NOBELIA.bin
+	-@$(RM) NOBELIA.cue
+
